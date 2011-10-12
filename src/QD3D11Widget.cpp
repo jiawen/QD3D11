@@ -162,7 +162,7 @@ void QD3D11Widget::resizeEvent( QResizeEvent* e )
 	m_pBackBuffer->Release();
 
 	// resize the swap chain
-	resizeSwapChain( width, height );	
+	resizeSwapChain( width, height );
 
 	// recreate the render targets
 	createBackBufferRenderTargetView();

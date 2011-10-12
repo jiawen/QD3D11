@@ -48,7 +48,7 @@ protected:
 	ID3D11RenderTargetView* m_pBackBufferRenderTargetView;
 
 	ID3D11Texture2D* m_pDepthStencilBuffer;
-	ID3D11DepthStencilView* m_pDepthStencilView;	
+	ID3D11DepthStencilView* m_pDepthStencilView;
 
 private:
 

@@ -7,6 +7,9 @@
 #include <vecmath/Vector2i.h>
 #include <imageproc/Image4f.h>
 
+// A RenderTarget is a texture with:
+// Usage = DFEAULT (GPU read/write, no CPU access)
+// Binding = render target, shader resource, and unordered access
 class RenderTarget
 {
 public:

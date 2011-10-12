@@ -14,7 +14,12 @@ public:
 	EffectManager( ID3D11Device* pDevice );
 	virtual ~EffectManager();
 
+	// Load the effect from a source file in "filename"
+	// and assign it the name "name"
 	bool loadFromFile( QString name, QString filename );
+
+	// Load the binary effect from a pre-compiled file in "filename"
+	// and assign it the name "name"
 	bool loadFromBinaryFile( QString name, QString filename );
 	
 	ID3DX11Effect* getEffect( QString name );

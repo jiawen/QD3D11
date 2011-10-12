@@ -7,24 +7,36 @@
 //////////////////////////////////////////////////////////////////////////
 
 // static
+StaticDataBuffer* StaticDataBuffer::createFloat( ID3D11Device* pDevice,
+												 int nElements )
+{
+	StaticDataBuffer* output = NULL;
+
+	int elementSizeBytes = sizeof( float );
+	D3D11_BUFFER_DESC bd = createStaticBufferDescription( nElements, elementSizeBytes );
+	
+	ID3D11Buffer* pBuffer;
+	HRESULT hr = pDevice->CreateBuffer( &bd, NULL, &pBuffer );
+	if( SUCCEEDED(  hr ) )
+	{
+		output = new StaticDataBuffer( pDevice,
+			nElements, elementSizeBytes,
+			DXGI_FORMAT_R32_FLOAT,
+			pBuffer );
+	}
+
+	return output;
+}
+
+// static
 StaticDataBuffer* StaticDataBuffer::createFloat2( ID3D11Device* pDevice,
 												 int nElements )
 {
-	// TODO: hoist this code out into a common function
 	StaticDataBuffer* output = NULL;
 
 	int elementSizeBytes = 2 * sizeof( float );
-	int bufferSize = nElements * elementSizeBytes;
-
-	// TODO: createStaticBufferDesc
-	D3D11_BUFFER_DESC bd;	
-	bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	bd.ByteWidth = bufferSize;
-	bd.CPUAccessFlags = 0;
-	bd.MiscFlags = 0;
-	bd.StructureByteStride = elementSizeBytes;
-	bd.Usage = D3D11_USAGE_DEFAULT;	
-
+	D3D11_BUFFER_DESC bd = createStaticBufferDescription( nElements, elementSizeBytes );
+	
 	ID3D11Buffer* pBuffer;
 	HRESULT hr = pDevice->CreateBuffer( &bd, NULL, &pBuffer );
 	if( SUCCEEDED(  hr ) )
@@ -42,20 +54,11 @@ StaticDataBuffer* StaticDataBuffer::createFloat2( ID3D11Device* pDevice,
 StaticDataBuffer* StaticDataBuffer::createFloat4( ID3D11Device* pDevice,
 												 int nElements )
 {
-	// TODO: hoist this code out into a common function
 	StaticDataBuffer* output = NULL;
 
 	int elementSizeBytes = 4 * sizeof( float );
-	int bufferSize = nElements * elementSizeBytes;
-
-	D3D11_BUFFER_DESC bd;	
-	bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	bd.ByteWidth = bufferSize;
-	bd.CPUAccessFlags = 0;
-	bd.MiscFlags = 0;
-	bd.StructureByteStride = elementSizeBytes;
-	bd.Usage = D3D11_USAGE_DEFAULT;	
-
+	D3D11_BUFFER_DESC bd = createStaticBufferDescription( nElements, elementSizeBytes );
+	
 	ID3D11Buffer* pBuffer;
 	HRESULT hr = pDevice->CreateBuffer( &bd, NULL, &pBuffer );
 	if( SUCCEEDED(  hr ) )
@@ -73,20 +76,11 @@ StaticDataBuffer* StaticDataBuffer::createFloat4( ID3D11Device* pDevice,
 StaticDataBuffer* StaticDataBuffer::createUInt2( ID3D11Device* pDevice,
 												 int nElements )
 {
-	// TODO: hoist this code out into a common function
 	StaticDataBuffer* output = NULL;
 
 	int elementSizeBytes = 2 * sizeof( uint );
-	int bufferSize = nElements * elementSizeBytes;
-
-	D3D11_BUFFER_DESC bd;	
-	bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	bd.ByteWidth = bufferSize;
-	bd.CPUAccessFlags = 0;
-	bd.MiscFlags = 0;
-	bd.StructureByteStride = elementSizeBytes;
-	bd.Usage = D3D11_USAGE_DEFAULT;
-
+	D3D11_BUFFER_DESC bd = createStaticBufferDescription( nElements, elementSizeBytes );
+	
 	ID3D11Buffer* pBuffer;
 	HRESULT hr = pDevice->CreateBuffer( &bd, NULL, &pBuffer );
 	if( SUCCEEDED(  hr ) )
@@ -167,4 +161,20 @@ StaticDataBuffer::StaticDataBuffer( ID3D11Device* pDevice,
 	desc.Buffer = bsrv;
 
 	HRESULT hr = pDevice->CreateShaderResourceView( m_pBuffer, &desc, &m_pSRV );
+}
+
+// static
+D3D11_BUFFER_DESC StaticDataBuffer::createStaticBufferDescription( int nElements, int elementSizeBytes )
+{
+	int bufferSize = nElements * elementSizeBytes;
+
+	D3D11_BUFFER_DESC bd;
+	bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	bd.ByteWidth = bufferSize;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+	bd.StructureByteStride = elementSizeBytes;
+	bd.Usage = D3D11_USAGE_DEFAULT;
+
+	return bd;
 }
