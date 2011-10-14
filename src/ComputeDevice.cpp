@@ -8,8 +8,15 @@ ComputeDevice* ComputeDevice::create( IDXGIAdapter* pAdapter )
 #ifdef _DEBUG
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
-		
-	D3D_DRIVER_TYPE driverType = D3D_DRIVER_TYPE_HARDWARE;
+	
+	// For some odd reason, D3D11 requires that:
+	// if pAdapter != NULL (you used a known adapter)
+	// then the driver type must be D3D_DRIVER_TYPE_UNKNOWN
+	// http://msdn.microsoft.com/en-us/library/windows/desktop/ff476082(v=vs.85).aspx
+	D3D_DRIVER_TYPE driverType =
+		( pAdapter == NULL ) ?
+		D3D_DRIVER_TYPE_HARDWARE :
+		D3D_DRIVER_TYPE_UNKNOWN;
 
 	D3D_FEATURE_LEVEL requestedFeatureLevel = D3D_FEATURE_LEVEL_11_0;
 	D3D_FEATURE_LEVEL actualFeatureLevel;

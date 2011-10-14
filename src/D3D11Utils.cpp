@@ -10,6 +10,29 @@
 #include "StagingStructuredBuffer.h"
 
 // static
+QVector< IDXGIAdapter* > D3D11Utils::getDXGIAdapters()
+{
+	QVector< IDXGIAdapter* > adapters;
+
+	IDXGIFactory1* pFactory;
+	HRESULT hr = CreateDXGIFactory1( __uuidof( IDXGIFactory1 ), ( void** )( &pFactory ) );
+	if( SUCCEEDED( hr ) )
+	{
+		uint i = 0;
+		IDXGIAdapter* pAdapter;
+		while( pFactory->EnumAdapters( i, &pAdapter ) != DXGI_ERROR_NOT_FOUND )
+		{ 
+			adapters.append( pAdapter );
+			++i; 
+		}
+
+		pFactory->Release();
+	}
+
+	return adapters;
+}
+
+// static
 D3D11_VIEWPORT D3D11Utils::createViewport( int width, int height )
 {
 	return createViewport( 0, 0, width, height, 0.0f, 1.0f );

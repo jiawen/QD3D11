@@ -5,6 +5,9 @@
 #include <D3DX11.h>
 #include <d3dx11effect.h>
 
+#include <QVector>
+#include <DXGI.h>
+
 #include <common/Reference.h>
 #include <cameras/Camera.h>
 #include <imageproc/Image1i.h>
@@ -25,6 +28,11 @@ class DynamicTexture2D;
 class D3D11Utils
 {
 public:
+
+	// Returns a QVector of DXGI adapter on this machine
+	// Be sure to release the pointers
+	// TODO: make a class for this that auto-releases?
+	static QVector< IDXGIAdapter* > getDXGIAdapters();
 
 	static D3D11_VIEWPORT createViewport( int width, int height );
 	static D3D11_VIEWPORT createViewport( const Vector2i& wh );
