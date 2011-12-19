@@ -644,9 +644,9 @@ void D3D11Utils::saveTextureToBinary( ID3D11Device* pDevice, ID3D11Texture2D* pT
 	{
 		Reference< Image1f > im0 = new Image1f( width, height );
 		copyTextureToImage( pDevice, pTexture, im0 );		
-		Reference< Image1f > im = im0->flipUD();
+		Image1f im = im0->flipUD();
 
-		float* pixels = im->pixels();
+		float* pixels = im.pixels();
 
 		FILE* fp = fopen( filename.toAscii().constData(), "wb" );
 		fwrite( &width, sizeof( int ), 1, fp );
@@ -672,7 +672,7 @@ void D3D11Utils::saveTextureToPFM( ID3D11Device* pDevice, ID3D11Texture2D* pText
 		{
 			Reference< Image1f > im = new Image1f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePFM( filename );
+			im->save( filename );
 			break;
 		}
 		case DXGI_FORMAT_R32G32_FLOAT:
@@ -680,7 +680,7 @@ void D3D11Utils::saveTextureToPFM( ID3D11Device* pDevice, ID3D11Texture2D* pText
 		{
 			Reference< Image4f > im = new Image4f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePFM( filename );
+			im->save( filename );
 			break;		
 		}
 		default:
@@ -706,7 +706,7 @@ void D3D11Utils::saveTextureToPFM4( ID3D11Device* pDevice, ID3D11Texture2D* pTex
 		{
 			Reference< Image4f > im = new Image4f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePFM4( filename );
+			im->save( filename );
 			break;		
 		}
 	default:
@@ -754,21 +754,21 @@ void D3D11Utils::saveTextureToPNG( ID3D11Device* pDevice, ID3D11Texture2D* pText
 		{
 			Reference< Image4ub > im = new Image4ub( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePNG( filename );
+			im->save( filename );
 			break;
 		}
 	case DXGI_FORMAT_R32_FLOAT:
 		{
 			Reference< Image1f > im = new Image1f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePNG( filename );
+			im->save( filename );
 			break;
 		}
 	case DXGI_FORMAT_R32G32B32A32_FLOAT:
 		{
 			Reference< Image4f > im = new Image4f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->savePNG( filename );
+			im->save( filename );
 			break;
 		}
 	}
@@ -797,7 +797,7 @@ void D3D11Utils::saveTextureToTXT( ID3D11Device* pDevice, ID3D11Texture2D* pText
 		{
 			Reference< Image1f > im = new Image1f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->saveTXT( filename );
+			im->save( filename );
 			break;
 		}
 	case DXGI_FORMAT_R32G32_FLOAT:
@@ -805,7 +805,7 @@ void D3D11Utils::saveTextureToTXT( ID3D11Device* pDevice, ID3D11Texture2D* pText
 		{
 			Reference< Image4f > im = new Image4f( width, height );
 			copyTextureToImage( pDevice, pTexture, im );
-			im->saveTXT( filename );
+			im->save( filename );
 			break;
 		}
 	default:

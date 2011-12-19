@@ -179,7 +179,7 @@ void QD3D11Viewer::mouseMoveEvent( QMouseEvent* event )
 	if( event->buttons() == Qt::LeftButton )
 	{
 		// pitch around the local x axis		
-		float pitch = pitchSpeed * delta.y();		
+		float pitch = pitchSpeed * delta.y;
 
 		Matrix3f pitchMatrix = Matrix3f::rotateX( pitch );		
 
@@ -187,7 +187,7 @@ void QD3D11Viewer::mouseMoveEvent( QMouseEvent* event )
 		z = cameraToWorld * pitchMatrix * worldToCamera * z;
 
 		// yaw around the world up vector
-		float yaw = yawSpeed * delta.x();
+		float yaw = yawSpeed * delta.x;
 
 		Matrix3f yawMatrix = m_groundPlaneToWorld * Matrix3f::rotateY( yaw ) * m_worldToGroundPlane;
 
@@ -199,15 +199,15 @@ void QD3D11Viewer::mouseMoveEvent( QMouseEvent* event )
 	}
 	else if( event->buttons() == Qt::RightButton )
 	{
-		float dx = panSpeed * delta.x();
-		float dz = walkSpeed * delta.y();
+		float dx = panSpeed * delta.x;
+		float dz = walkSpeed * delta.y;
 
 		translate( dx, 0, dz );
 	}
 	else if( event->buttons() & Qt::LeftButton &&
 		event->buttons() & Qt::RightButton )
 	{
-		float dy = -panSpeed * delta.y();
+		float dy = -panSpeed * delta.y;
 		translate( 0, dy, 0 );
 	}
 

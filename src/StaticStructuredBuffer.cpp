@@ -95,5 +95,8 @@ StaticStructuredBuffer::StaticStructuredBuffer( ID3D11Device* pDevice,
 	/*
 	D3D11_SHADER_RESOURCE_VIEW_DESC desc2;
 	m_pSRV->GetDesc( &desc2 );
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC desc3;
+	m_pUAV->GetDesc( &desc3 );
 	*/
 }
